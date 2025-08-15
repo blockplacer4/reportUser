@@ -11,7 +11,7 @@ export default async function (req) {
 
     try {
         const payload = JSON.parse(req.payload || '{}');
-        const { chat_id, reporter_user_id, reason_category, reason_detail } = payload;
+        const { chat_id, reporter_user_id, reason } = payload;
 
         if (!chat_id || !reporter_user_id || !reason_category) {
             return { error: "Missing required fields" };
@@ -34,7 +34,6 @@ export default async function (req) {
                 ID.unique(),
                 {
                     chatid: chat_id,
-                    reason_category: reason_category,
                     reason_detail: reason_detail || "",
                     content: msg.content,
                     sender_id: msg.senderid,
