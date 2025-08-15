@@ -15,10 +15,7 @@ export default async function ({req, res, log, error}) {
         log("GOT TO P1");
         const { chat_id, reporter_user_id, reason } = body;
         log("GOT TO P2");
-        if (!chat_id || !reporter_user_id || !reason) {
-            return { error: "Missing required fields" };
-        }
-        log("GOT TO P1");
+
         // Alle Nachrichten des Chats abrufen
         const messagesList = await databases.listDocuments(
             process.env.DB_ID,
