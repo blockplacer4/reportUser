@@ -39,9 +39,10 @@ export default async function (req) {
                     sender_id: msg.senderid,
                     reportetid: reporter_user_id,
                 }
-                log("Document created");
+                
             );
             createdReports.push(report);
+            log("Document created");
         }
 
         return { success: true, reports: createdReports };
