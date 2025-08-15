@@ -1,6 +1,6 @@
 import { Client, Databases, ID, Query } from 'node-appwrite';
 
-export default async function (req) {
+export default async function ({req, res, log, error}) {
     const client = new Client();
     const databases = new Databases(client);
     log("test");
