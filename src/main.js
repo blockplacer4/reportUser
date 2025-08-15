@@ -20,7 +20,7 @@ export default async function ({req, res, log, error}) {
         const messagesList = await databases.listDocuments(
             process.env.DB_ID,
             process.env.MESSAGES_COLLECTION_ID,
-            [Query.equal('chat_id', chat_id)],
+            [Query.equal('chatId', chat_id)],
             100
         );
 
