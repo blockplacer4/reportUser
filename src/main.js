@@ -14,7 +14,7 @@ export default async function ({req, res, log, error}) {
         ;
         log("GOT TO P1");
         const { chat_id, reporter_user_id, reason } = body;
-
+        log("GOT TO P2");
         if (!chat_id || !reporter_user_id || !reason) {
             return { error: "Missing required fields" };
         }
