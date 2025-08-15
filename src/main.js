@@ -12,6 +12,7 @@ export default async function ({req, res, log, error}) {
     try {
         const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
         ;
+        log("GOT TO P1");
         const { chat_id, reporter_user_id, reason } = body;
 
         if (!chat_id || !reporter_user_id || !reason) {
