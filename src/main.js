@@ -6,8 +6,7 @@ export default async function ({req, res, log, error}) {
     log("test");
     client
         .setEndpoint(process.env.ENDPOINT.trim())
-        .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-        .setKey(process.env.APPWRITE_API_KEY);
+        .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID);
     const databases = new Databases(client);
     try {
         const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
