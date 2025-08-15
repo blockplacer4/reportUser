@@ -34,11 +34,10 @@ export default async function (req) {
                 ID.unique(),
                 {
                     chatid: chat_id,
-                    reason_detail: reason_detail || "",
+                    reason: reason_detail || "",
                     content: msg.content,
                     sender_id: msg.senderid,
                     reportetid: reporter_user_id,
-                    status: "pending"
                 }
             );
             createdReports.push(report);
