@@ -1,6 +1,6 @@
 import { Client, Databases, ID, Query } from 'node-appwrite';
 
-export default async function (req, res) {
+export default async function (req) {
     const client = new Client();
     const databases = new Databases(client);
 
@@ -14,7 +14,7 @@ export default async function (req, res) {
         const { chat_id, reporter_user_id, reason_category, reason_detail } = payload;
 
         if (!chat_id || !reporter_user_id || !reason_category) {
-            return res.json({ error: "Missing required fields" }, 400);
+            return { error: "Missing required fields" };
         }
 
         const messagesList = await databases.listDocuments(
@@ -42,10 +42,11 @@ export default async function (req, res) {
             }
         );
 
-        return res.json({ success: true, report });
+        // Einfach das Objekt zurückgeben – Appwrite serialisiert es automatisch
+        return { success: true, report };
 
     } catch (error) {
         console.error(error);
-        return res.json({ error: error.message }, 500);
+        return { error: error.message };
     }
 }
