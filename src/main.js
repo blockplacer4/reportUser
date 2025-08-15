@@ -10,10 +10,11 @@ export default async function ({req, res, log, error}) {
         .setKey(process.env.APPWRITE_API_KEY);
 
     try {
-        const payload = JSON.parse(req.payload || '{}');
-        const { chat_id, reporter_user_id, reason } = payload;
+        const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+        ;
+        const { chat_id, reporter_user_id, reason } = body;
 
-        if (!chat_id || !reporter_user_id || !reason_category) {
+        if (!chat_id || !reporter_user_id || !reason) {
             return { error: "Missing required fields" };
         }
         log("GOT TO P1");
