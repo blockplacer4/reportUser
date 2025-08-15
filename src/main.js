@@ -25,7 +25,7 @@ export default async function (req) {
         );
 
         const createdReports = [];
-
+        log(messagesList.length);
         // Für jede Nachricht ein eigenes Report-Dokument erstellen
         for (const msg of messagesList.documents) {
             const report = await databases.createDocument(
