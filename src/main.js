@@ -1,9 +1,8 @@
-const sdk = require('node-appwrite');
+import { Client, Databases, ID, Query } from 'node-appwrite';
 
-module.exports = async function (req, res) {
-    const client = new sdk.Client();
-    const databases = new sdk.Databases(client);
-
+export default async function (req, res) {
+    const client = new Client();
+    const databases = new Databases(client);
 
     client
         .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
@@ -11,9 +10,8 @@ module.exports = async function (req, res) {
         .setKey(process.env.APPWRITE_API_KEY);
 
     try {
-
         const payload = JSON.parse(req.payload || '{}');
-        const { chat_id, reporter_user_id, reason_detail } = payload;
+        const { chat_id, reporter_user_id, reason_category, reason_detail } = payload;
 
         if (!chat_id || !reporter_user_id || !reason_category) {
             return res.json({ error: "Missing required fields" }, 400);
@@ -22,9 +20,8 @@ module.exports = async function (req, res) {
         const messagesList = await databases.listDocuments(
             process.env.DB_ID,
             process.env.MESSAGES_COLLECTION_ID,
-            [sdk.Query.equal('chat_id', chat_id)]
+            [Query.equal('chat_id', chat_id)]
         );
-
 
         const chatContent = messagesList.documents.map(msg => ({
             sender_id: msg.senderid,
@@ -32,11 +29,10 @@ module.exports = async function (req, res) {
             chatid: msg.chatId
         }));
 
-
         const report = await databases.createDocument(
             process.env.DB_ID,
             process.env.REPORTS_COLLECTION_ID,
-            sdk.ID.unique(),
+            ID.unique(),
             {
                 chatid: chat_id,
                 reasonl: reason_detail || "",
@@ -52,4 +48,4 @@ module.exports = async function (req, res) {
         console.error(error);
         return res.json({ error: error.message }, 500);
     }
-};
+}
