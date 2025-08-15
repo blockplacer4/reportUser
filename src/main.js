@@ -2,13 +2,13 @@ import { Client, Databases, ID, Query } from 'node-appwrite';
 
 export default async function ({req, res, log, error}) {
     const client = new Client();
-    const databases = new Databases(client);
+    
     log("test");
     client
         .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
         .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
         .setKey(process.env.APPWRITE_API_KEY);
-
+    const databases = new Databases(client);
     try {
         const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
         ;
