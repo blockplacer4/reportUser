@@ -5,7 +5,7 @@ export default async function ({req, res, log, error}) {
     
     log("test");
     client
-        .setEndpoint(process.env.ENDPOINT)
+        .setEndpoint(process.env.ENDPOINT.trim())
         .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
         .setKey(process.env.APPWRITE_API_KEY);
     const databases = new Databases(client);
