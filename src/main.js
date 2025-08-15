@@ -3,7 +3,7 @@ import { Client, Databases, ID, Query } from 'node-appwrite';
 export default async function (req) {
     const client = new Client();
     const databases = new Databases(client);
-
+    log("test");
     client
         .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
         .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
@@ -16,7 +16,7 @@ export default async function (req) {
         if (!chat_id || !reporter_user_id || !reason_category) {
             return { error: "Missing required fields" };
         }
-
+        log("GOT TO P1");
         // Alle Nachrichten des Chats abrufen
         const messagesList = await databases.listDocuments(
             process.env.DB_ID,
