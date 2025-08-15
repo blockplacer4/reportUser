@@ -17,33 +17,35 @@ export default async function (req) {
             return { error: "Missing required fields" };
         }
 
+        // Alle Nachrichten des Chats abrufen
         const messagesList = await databases.listDocuments(
             process.env.DB_ID,
             process.env.MESSAGES_COLLECTION_ID,
             [Query.equal('chat_id', chat_id)]
         );
 
-        const chatContent = messagesList.documents.map(msg => ({
-            sender_id: msg.senderid,
-            message: msg.content,
-            chatid: msg.chatId
-        }));
+        const createdReports = [];
 
-        const report = await databases.createDocument(
-            process.env.DB_ID,
-            process.env.REPORTS_COLLECTION_ID,
-            ID.unique(),
-            {
-                chatid: chat_id,
-                reasonl: reason_detail || "",
-                content: JSON.stringify(chatContent),
-                reportetid: reporter_user_id,
-                status: "pending"
-            }
-        );
+        // Für jede Nachricht ein eigenes Report-Dokument erstellen
+        for (const msg of messagesList.documents) {
+            const report = await databases.createDocument(
+                process.env.DB_ID,
+                process.env.REPORTS_COLLECTION_ID,
+                ID.unique(),
+                {
+                    chatid: chat_id,
+                    reason_category: reason_category,
+                    reason_detail: reason_detail || "",
+                    content: msg.content,
+                    sender_id: msg.senderid,
+                    reportetid: reporter_user_id,
+                    status: "pending"
+                }
+            );
+            createdReports.push(report);
+        }
 
-        // Einfach das Objekt zurückgeben – Appwrite serialisiert es automatisch
-        return { success: true, report };
+        return { success: true, reports: createdReports };
 
     } catch (error) {
         console.error(error);
