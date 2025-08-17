@@ -31,6 +31,7 @@ export default async function (context) {
                     content: msg.content || "",
                     sender_id: msg.senderId,
                     reportetid: reporter_user_id,
+                    uniqueSenderID: msg.uniqueSenderID,
                 }
             );
             createdReports.push(report);
