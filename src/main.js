@@ -29,7 +29,7 @@ export default async function (context) {
                     chatid: chat_id,
                     reason: reason || "",
                     content: msg.content || "",
-                    sender_id: msg.senderId,
+                    senderid: msg.senderId,
                     reportetid: reporter_user_id,
                     uniqueSenderID: msg.uniqueSenderID,
                 }
